@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rethinking Generative Large Language Model Evaluation for Semantic Comprehension</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        .list-inline {
+            list-style: none;
+            margin-left: -0.5em;
+            margin-right: -0.5em;
+            padding-left: 0;
+        }
+
+        .list-inline>li {
+            display: inline-block;
+            margin-left: 0.5em;
+            margin-right: 0.5em;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        #arxiv {
+            width: auto;
+            padding: 8px;
+            margin: auto;
+        }
+
+        #arxiv:hover {
+            background-color: rgb(233, 233, 233);
+        }
+
+        hr {
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container text-center" style="padding-top: 100px">
+        <div class="row">
+            <h1>Rethinking Generative Large Language Model Evaluation</h1>
+            <h1>for Semantic Comprehension</h1>
+            <hr style="margin-top:12px; margin-bottom: 20px;">
+        </div>
+        <div class="row">
+            <div>
+                <ul class="list-inline">
+                    <li>
+                        <a href="https://scholar.google.com/citations?user=-ncz2s8AAAAJ">
+                            Fangyun Wei
+                        </a>
+                        *
+                    </li>
+                    <li>
+                        <!-- <a href="" style="font-size: 16px;"> -->
+                        Lin Luo
+                        <!-- </a> -->
+                        *
+                    </li>
+                    <li>
+                        <!-- <a href="" style="font-size: 16px;"> -->
+                        Xi Chen
+                        <!-- </a> -->
+                        *
+                    </li>
+                    <br>
+                    <li style="margin-top: 8px;">
+                        <span>
+                            Microsoft Research Asia
+                        </span>
+                    </li>
+                    <br>
+                    <li style="margin-top: 8px;">
+                        <sup></sup>*:
+                        <span span="" style="font-size: 14px;">
+                            Equal contribution
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="arxiv">
+                <a href="">
+                    <img src="arxiv-logo.png" style="width: 60px;" />
+                    <span href="" style="display: block;">ArXiv</span>
+                </a>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 8px;">
+            <div class="text-center">
+                <div style="font-size: 30px;">Abstract</div>
+                <hr style="margin-top: 8px;">
+            </div>
+            <div style="text-align: justify;">Despite their sophisticated capabilities, large language models (LLMs)
+                encounter a major hurdle in effective assessment. This paper first revisits the prevalent evaluation
+                method—multiple choice question answering (MCQA), which allows for straightforward accuracy measurement.
+                Through a comprehensive evaluation of 24 models across 11 benchmarks, we highlight several potential
+                drawbacks of MCQA, for instance, the inconsistency between the MCQA evaluation and the generation of
+                open-ended responses in practical scenarios. In response, we introduce an RWQ-Elo rating system,
+                engaging 24 LLMs such as GPT-4, GPT-3.5, Google-Gemini-Pro and LLaMA-1/-2, in a two-player competitive
+                format, with GPT-4 serving as the judge. Each LLM receives an Elo rating thereafter. This system is
+                designed to mirror real-world usage, and for this purpose, we have compiled a new benchmark called
+                ``Real-world questions'' (RWQ), comprising 20,772 authentic user inquiries. Additionally, we thoroughly
+                analyze the characteristics of our system and compare it with prior leaderboards like AlpacaEval and
+                MT-Bench. Our analysis reveals the stability of our RWQ-Elo system, the feasibility of registering new
+                models, and its potential to reshape LLM leaderboards.</div>
+        </div>
+        <div class="row" style="margin-top: 8px;">
+            <div class="text-center">
+                <div style="font-size: 30px;">Result Overview</div>
+                <hr style="margin-top: 8px;">
+            </div>
+            <div style="width: 90%; margin: auto;">
+                <table class="table align-middle">
+                    <!-- <caption style="text-align: justify;">Averaged results across 11 0-shot datasets including MMLU, HellaSwag, ARC-Challenge and ARC-Easy, BoolQ, SIQA, PIQA, AGIEval (English only), OpenBookQA (with fact), CommonSenseQA and RACE (all), using 7 evaluation strategies introduced in the paper. We use the latest models up to February 1, 2024. We use general MCQA prompt for all benchmarks without dedicated design. Detailed results for each benchmark can be found in the paper.</caption> -->
+                    <caption style="text-align: justify;">We evaluated our approach using an average of results from 11
+                        zero-shot datasets, including MMLU, HellaSwag, ARC-Challenge, ARC-Easy, BoolQ, SIQA, PIQA,
+                        AGIEval (English only), OpenBookQA (with fact), CommonSenseQA, and RACE (all). This evaluation
+                        employed seven distinct strategies introduced in our paper, leveraging the most recent models
+                        available as of February 1, 2024. For all benchmarks, we utilized a general multiple-choice
+                        question-answering (MCQA) prompt, without custom designs for each dataset. The paper provides
+                        detailed results for each benchmark.</caption>
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Model</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Choices</th>
+                            <th scope="col">Choices (Circular)</th>
+                            <th scope="col">Vocab</th>
+                            <th scope="col">Vocab (Circular)</th>
+                            <th scope="col">Alignment</th>
+                            <th scope="col">Normalized Alignment</th>
+                            <th scope="col">PPL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" rowspan="2">MPT</th>
+                            <td>7B</td>
+                            <td>36.0</td>
+                            <td>2.2</td>
+                            <td>35.2</td>
+                            <td>2.0</td>
+                            <td>52.3</td>
+                            <td>54.3</td>
+                            <td>54.2</td>
+                        </tr>
+                        <tr>
+                            <td>30B</td>
+                            <td>53.0</td>
+                            <td>26.4</td>
+                            <td>49.2</td>
+                            <td>23.0</td>
+                            <td>54.8</td>
+                            <td>57.1</td>
+                            <td>56.8</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" rowspan="1">MPT-Chat</th>
+                            <td>30B</td>
+                            <td>61.5</td>
+                            <td>37.9</td>
+                            <td>60.8</td>
+                            <td>37.0</td>
+                            <td>56.7</td>
+                            <td>58.9</td>
+                            <td>58.3</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" rowspan="2">Falcon</th>
+                            <td>7B</td>
+                            <td>31.7</td>
+                            <td>3.6</td>
+                            <td>30.2</td>
+                            <td>2.9</td>
+                            <td>52.3</td>
+                            <td>54.2</td>
+                            <td>54.7</td>
+                        </tr>
+                        <tr>
+                            <td>40B</td>
+                            <td>62.3</td>
+                            <td>36.6</td>
+                            <td>62.0</td>
+                            <td>36.4</td>
+                            <td>57.8</td>
+                            <td>59.4</td>
+                            <td>59.8</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" rowspan="4">LLaMA-1</th>
+                            <td>7B</td>
+                            <td>40.4</td>
+                            <td>8.0</td>
+                            <td>38.7</td>
+                            <td>7.2</td>
+                            <td>52.8</td>
+                            <td>54.7</td>
+                            <td>53.6</td>
+                        </tr>
+                        <tr>
+                            <td>13B</td>
+                            <td>52.6</td>
+                            <td>20.1</td>
+                            <td>50.2</td>
+                            <td>18.3</td>
+                            <td>54.6</td>
+                            <td>56.1</td>
+                            <td>55.3</td>
+                        </tr>
+                        <tr>
+                            <td>30B</td>
+                            <td>65.6</td>
+                            <td>45.3</td>
+                            <td>65.4</td>
+                            <td>45.0</td>
+                            <td>57.0</td>
+                            <td>58.7</td>
+                            <td>57.8</td>
+                        </tr>
+                        <tr>
+                            <td>65B</td>
+                            <td>67.5</td>
+                            <td>45.2</td>
+                            <td>66.1</td>
+                            <td>43.9</td>
+                            <td>58.3</td>
+                            <td>60.1</td>
+                            <td>59.4</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" rowspan="3">LLaMA-2</th>
+                            <td>7B</td>
+                            <td>47.5</td>
+                            <td>17.4</td>
+                            <td>42.7</td>
+                            <td>14.1</td>
+                            <td>53.3</td>
+                            <td>55.1</td>
+                            <td>54.4</td>
+                        </tr>
+                        <tr>
+                            <td>13B</td>
+                            <td>60.8</td>
+                            <td>31.1</td>
+                            <td>58.6</td>
+                            <td>29.7</td>
+                            <td>55.5</td>
+                            <td>57.0</td>
+                            <td>56.4</td>
+                        </tr>
+                        <tr>
+                            <td>70B</td>
+                            <td>75.2</td>
+                            <td>58.4</td>
+                            <td>74.8</td>
+                            <td>57.9</td>
+                            <td>59.0</td>
+                            <td>60.4</td>
+                            <td>59.8</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" rowspan="3">LLaMA-2-Chat</th>
+                            <td>7B</td>
+                            <td>57.7</td>
+                            <td>28.8</td>
+                            <td>55.8</td>
+                            <td>28.3</td>
+                            <td>54.1</td>
+                            <td>55.8</td>
+                            <td>54.5</td>
+                        </tr>
+                        <tr>
+                            <td>13B</td>
+                            <td>65.4</td>
+                            <td>40.9</td>
+                            <td>65.3</td>
+                            <td>40.8</td>
+                            <td>56.0</td>
+                            <td>58.6</td>
+                            <td>57.0</td>
+                        </tr>
+                        <tr>
+                            <td>70B</td>
+                            <td>74.3</td>
+                            <td>56.8</td>
+                            <td>74.2</td>
+                            <td>56.6</td>
+                            <td>58.9</td>
+                            <td>60.7</td>
+                            <td>59.5</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" rowspan="2">WizardLM</th>
+                            <td>13B</td>
+                            <td>67.6</td>
+                            <td>47.1</td>
+                            <td>67.6</td>
+                            <td>47.1</td>
+                            <td>56.6</td>
+                            <td>58.1</td>
+                            <td>57.4</td>
+                        </tr>
+                        <tr>
+                            <td>70B</td>
+                            <td>76.7</td>
+                            <td>61.7</td>
+                            <td>76.6</td>
+                            <td>61.6</td>
+                            <td>59.2</td>
+                            <td>60.3</td>
+                            <td>59.8</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" rowspan="2">Xwin-LM</th>
+                            <td>7B</td>
+                            <td>55.0</td>
+                            <td>25.2</td>
+                            <td>54.8</td>
+                            <td>25.0</td>
+                            <td>55.0</td>
+                            <td>55.9</td>
+                            <td>55.3</td>
+                        </tr>
+                        <tr>
+                            <td>13B</td>
+                            <td>64.0</td>
+                            <td>34.9</td>
+                            <td>63.9</td>
+                            <td>34.7</td>
+                            <td>57.3</td>
+                            <td>58.6</td>
+                            <td>58.1</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" rowspan="2">Alpaca</th>
+                            <td>7B</td>
+                            <td>52.7</td>
+                            <td>24.4</td>
+                            <td>52.5</td>
+                            <td>24.1</td>
+                            <td>54.4</td>
+                            <td>56.5</td>
+                            <td>55.1</td>
+                        </tr>
+                        <tr>
+                            <td>13B</td>
+                            <td>54.0</td>
+                            <td>30.3</td>
+                            <td>53.6</td>
+                            <td>30.0</td>
+                            <td>55.5</td>
+                            <td>56.8</td>
+                            <td>55.9</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" rowspan="3">Vicuna</th>
+                            <td>7B</td>
+                            <td>62.6</td>
+                            <td>41.1</td>
+                            <td>62.5</td>
+                            <td>41.0</td>
+                            <td>53.8</td>
+                            <td>54.7</td>
+                            <td>54.3</td>
+                        </tr>
+                        <tr>
+                            <td>13B</td>
+                            <td>68.8</td>
+                            <td>50.1</td>
+                            <td>68.7</td>
+                            <td>50.1</td>
+                            <td>56.3</td>
+                            <td>57.6</td>
+                            <td>56.6</td>
+                        </tr>
+                        <tr>
+                            <td>33B</td>
+                            <td>69.6</td>
+                            <td>50.2</td>
+                            <td>64.3</td>
+                            <td>45.0</td>
+                            <td>56.4</td>
+                            <td>57.9</td>
+                            <td>57.4</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div style="width: 90%; margin: auto;">
+                <img src="elo_score_all.svg" style="width: 90%; display: block; margin: auto;">
+                <table style="width: 90%; margin: auto;">
+                    <caption class="text-center">Complete statistics from running our RWQ-Elo system 100 times are
+                        presented. We show the Elo ratings for all 24 models.</caption>
+                </table>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 8px;">
+            <div class="text-center">
+                <div style="font-size: 30px;">Citation</div>
+                <hr style="margin-top: 8px;">
+            </div>
+            <div class="text-center">
+                <pre style="text-align: left; display: flex;">
+                    <code style="margin: auto; padding: 0 24px; background: #fbfafa;">
+@article{wei2024rethinking,
+    title={Rethinking Generative Large Language Model Evaluation for Semantic Comprehension},
+    author={Fangyun Wei and Lin Luo and Xi Chen},
+    journal={arXiv preprint arXiv:2402.00001},
+    year={2024}
+}
+                </code>
+                </pre>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
