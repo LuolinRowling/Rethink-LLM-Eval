@@ -25,13 +25,14 @@
             text-align: center;
         }
 
-        #arxiv {
-            width: auto;
+        .redirect-block {
+            display: inline-block;
             padding: 8px;
-            margin: auto;
+            margin: 0 8px;
+            width: auto;
         }
 
-        #arxiv:hover {
+        .redirect-block:hover {
             background-color: rgba(233, 233, 233, 0.6);
         }
 
@@ -72,11 +73,23 @@
                 </ul>
             </div>
         </div>
-        <div class="row">
-            <div id="arxiv">
+        <div class="row" style="justify-content: center;">
+            <div class="redirect-block">
                 <a href="">
-                    <img src="arxiv-logo.png" style="width: 60px;" />
+                    <img src="arxiv-logo.png" style="width: 60px; max-height: 26px;" />
                     <span href="" style="display: block;">ArXiv</span>
+                </a>
+            </div>
+            <div class="redirect-block">
+                <a href="">
+                    <img src="GitHub_Logo.png" style="width: 60px; max-height: 26px;" />
+                    <span href="" style="display: block;">Code</span>
+                </a>
+            </div>
+            <div class="redirect-block">
+                <a href="">
+                    <img src="hf-logo.svg" style="width: 60px; max-height: 26px;" />
+                    <span href="" style="display: block;">Dataset</span>
                 </a>
             </div>
         </div>
